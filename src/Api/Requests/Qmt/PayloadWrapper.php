@@ -32,6 +32,11 @@ class PayloadWrapper
     private $user;
 
     /**
+     * @var string
+     */
+    private $actionTag = '';
+
+    /**
      * @param array $data
      * @return $this
      */
@@ -82,6 +87,16 @@ class PayloadWrapper
     }
 
     /**
+     * @param string $actionTag
+     * @return $this
+     */
+    public function setActionTag(string $actionTag): self
+    {
+        $this->actionTag = $actionTag;
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function toArray(): array
@@ -95,7 +110,8 @@ class PayloadWrapper
             'data' => $this->data,
             'meta' => $this->meta,
             'tenantTag' => $this->tenantTag,
-            'user' => $this->user->toArray()
+            'user' => $this->user->toArray(),
+            'action_tag' => $this->actionTag,
         ];
     }
 }
