@@ -1,43 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Insly\AmqpSenderClient\Api\Requests\Qmt;
 
 use RuntimeException;
 
 class PayloadWrapper
 {
-    /**
-     * @var array
-     */
-    private $data = [];
+    private array $data = [];
+
+    private array $meta = [];
+
+    private string $tenantTag = '';
+
+    private string $requestId = '';
+
+    private ?User $user;
+
+    private string $actionTag = '';
 
     /**
-     * @var array
-     */
-    private $meta = [];
-
-    /**
-     * @var string
-     */
-    private $tenantTag = '';
-
-    /**
-     * @var string
-     */
-    private $requestId = '';
-
-    /**
-     * @var User
-     */
-    private $user;
-
-    /**
-     * @var string
-     */
-    private $actionTag = '';
-
-    /**
-     * @param array $data
      * @return $this
      */
     public function setData(array $data): self
@@ -47,7 +30,6 @@ class PayloadWrapper
     }
 
     /**
-     * @param array $meta
      * @return $this
      */
     public function setMeta(array $meta): self
@@ -57,7 +39,6 @@ class PayloadWrapper
     }
 
     /**
-     * @param string $tenantTag
      * @return $this
      */
     public function setTenantTag(string $tenantTag): self
@@ -67,7 +48,6 @@ class PayloadWrapper
     }
 
     /**
-     * @param User $user
      * @return $this
      */
     public function setUser(User $user): self
@@ -77,7 +57,6 @@ class PayloadWrapper
     }
 
     /**
-     * @param string $requestId
      * @return $this
      */
     public function setRequestId(string $requestId): self
@@ -87,7 +66,6 @@ class PayloadWrapper
     }
 
     /**
-     * @param string $actionTag
      * @return $this
      */
     public function setActionTag(string $actionTag): self
@@ -96,12 +74,9 @@ class PayloadWrapper
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function toArray(): array
     {
-        if (!$this->user) {
+        if (! $this->user) {
             throw new RuntimeException('No user provided for the queue payload');
         }
 

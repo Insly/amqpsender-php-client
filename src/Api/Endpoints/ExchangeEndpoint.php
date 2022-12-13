@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Insly\AmqpSenderClient\Api\Endpoints;
 
 use Insly\AmqpSenderClient\Api\Client;
@@ -7,31 +9,16 @@ use Insly\AmqpSenderClient\Api\Responses\SentResponse;
 
 class ExchangeEndpoint
 {
-    /**
-     * @var Client
-     */
-    private $client;
+    private Client $client;
 
-    /**
-     * @var string
-     */
-    private $exchangeName;
+    private string $exchangeName;
 
-    /**
-     * @param Client $client
-     * @param string $exchangeName
-     */
     public function __construct(Client $client, string $exchangeName)
     {
         $this->client = $client;
         $this->exchangeName = $exchangeName;
     }
 
-    /**
-     * @param string $routingKey
-     * @param array $data
-     * @return SentResponse
-     */
     public function trigger(string $routingKey, array $data): SentResponse
     {
         return new SentResponse(
@@ -42,10 +29,6 @@ class ExchangeEndpoint
         );
     }
 
-    /**
-     * @param string $routingKey
-     * @return string
-     */
     private function getEndpointPath(string $routingKey): string
     {
         return sprintf(
@@ -55,10 +38,6 @@ class ExchangeEndpoint
         );
     }
 
-    /**
-     * @param string $routingKey
-     * @return string
-     */
     private function prefixTenant(string $routingKey): string
     {
         // Tenant already provided
@@ -67,7 +46,7 @@ class ExchangeEndpoint
         }
 
         // No point going further
-        if (!$this->client->getConfig()->getTenant()) {
+        if (! $this->client->getConfig()->getTenant()) {
             return $routingKey;
         }
 
