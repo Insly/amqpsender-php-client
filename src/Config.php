@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Insly\AmqpSenderClient;
 
 use Insly\AmqpSenderClient\Exceptions\ConfigException;
@@ -28,13 +30,9 @@ class Config
      */
     public const PARAM_AUTH_TOKEN = 'auth_token';
 
-    /**
-     * @var array
-     */
-    private $params;
+    private array $params = [];
 
     /**
-     * @param array $params
      * @throws ConfigException
      */
     public function __construct(array $params)
@@ -46,8 +44,7 @@ class Config
     /**
      * Get config parameter
      *
-     * @param string $key
-     * @param null   $default
+     * @param mixed $default
      * @return mixed
      */
     public function get(string $key, $default = null)
@@ -55,32 +52,22 @@ class Config
         return $this->params[$key] ?? $default;
     }
 
-    /**
-     * @return string|null
-     */
     public function getBaseUrl(): ?string
     {
         return $this->get(self::PARAM_HOST);
     }
 
-    /**
-     * @return string|null
-     */
     public function getAuthToken(): ?string
     {
         return $this->get(self::PARAM_AUTH_TOKEN);
     }
 
-    /**
-     * @return string|null
-     */
     public function getTenant(): string
     {
         return $this->get(self::PARAM_TENANT, '');
     }
 
     /**
-     * @return void
      * @throws ConfigException
      */
     private function validateConfig(): void

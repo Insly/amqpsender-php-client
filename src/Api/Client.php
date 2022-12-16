@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Insly\AmqpSenderClient\Api;
 
 use Insly\AmqpSenderClient\Api\Endpoints\ExchangeEndpoint;
@@ -11,23 +13,13 @@ class Client
 
     public const EXCHANGE_EVENTS = 'events';
 
-    /**
-     * @var Config
-     */
-    protected $config;
+    protected Config $config;
 
-    /**
-     * @param Config $config
-     */
     public function __construct(Config $config)
     {
         $this->config = $config;
     }
 
-    /**
-     * @param string $exchangeName
-     * @return ExchangeEndpoint
-     */
     public function exchange(string $exchangeName): ExchangeEndpoint
     {
         return new ExchangeEndpoint($this, $exchangeName);
@@ -35,17 +27,12 @@ class Client
 
     /**
      * Alias for exchange('events')
-     *
-     * @return ExchangeEndpoint
      */
     public function events(): ExchangeEndpoint
     {
         return $this->exchange(static::EXCHANGE_EVENTS);
     }
 
-    /**
-     * @return Config
-     */
     public function getConfig(): Config
     {
         return $this->config;

@@ -3,9 +3,9 @@
     "description": "A PHP client library for interacting with Amqpsender API",
     "type": "library",
     "require": {
-        "php": "^7.2||^8.0",
+        "php": "^7.4||^8.0",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^6.2"
+        "guzzlehttp/guzzle": "^7.5"
     },
     "autoload": {
         "psr-4": {

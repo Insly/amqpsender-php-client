@@ -1,45 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Insly\AmqpSenderClient\Api\Responses;
 
+use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 class SentResponse implements AMQPResponseInterface
 {
-    /**
-     * @var ResponseInterface
-     */
-    protected $response;
+    protected ResponseInterface $response;
 
-    /**
-     * @param ResponseInterface $response
-     */
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
     }
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int
     {
         return $this->response->getStatusCode();
     }
 
-    /**
-     * @return string
-     */
     public function getBody(): string
     {
-        return (string)$this->response->getBody();
+        return (string) $this->response->getBody();
     }
 
-    /**
-     * @return array
-     */
     public function getBodyJson(): array
     {
-        return (array)\GuzzleHttp\json_decode($this->getBody(), true);
+        return (array) Utils::jsonDecode($this->getBody(), true);
     }
 }
